@@ -1,0 +1,17 @@
+@import '@fontsource-variable/inter';
+@import 'tailwindcss';
+@import './theme.css';
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  @apply bg-brand-navy text-brand-white font-sans antialiased;
+  overscroll-behavior: none;
+}
+
+#root {
+  min-height: 100dvh;
+}

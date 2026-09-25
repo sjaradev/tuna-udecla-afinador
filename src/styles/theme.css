@@ -1,0 +1,51 @@
+/* Tokens de marca — Tuna UdeC Campus Los Ángeles.
+   Ajustar los tonos exactos cuando se disponga del manual de marca institucional. */
+@theme {
+  --color-brand-navy: #0a1628;
+  --color-brand-navy-soft: #12233d;
+  --color-brand-navy-raised: #1a3050;
+  --color-brand-blue: #2f6fd0;
+  --color-brand-blue-bright: #5b94e8;
+  --color-brand-gold: #e8b93b;
+  --color-brand-gold-soft: #f2d27a;
+  --color-brand-white: #f4f7fc;
+  --color-brand-muted: #8fa3bf;
+  --color-brand-red: #e05252;
+  --color-brand-green: #3fce7a;
+
+  --font-sans: 'Inter Variable', system-ui, sans-serif;
+}
+
+/* Safe areas de iPhone */
+.safe-top {
+  padding-top: env(safe-area-inset-top);
+}
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.safe-left {
+  padding-left: env(safe-area-inset-left);
+}
+.safe-right {
+  padding-right: env(safe-area-inset-right);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tuned-pulse {
+    animation: none !important;
+  }
+}
+
+@keyframes tuned-pulse-kf {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.75;
+  }
+}
+
+.tuned-pulse {
+  animation: tuned-pulse-kf 1.6s ease-in-out infinite;
+}

@@ -1,0 +1,12 @@
+<!-- Fuente del icono PWA: navy + cinta diagonal dorada + diapasón estilizado. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#0a1628"/>
+  <path d="M0 400 512 96v80L0 480z" fill="#e8b93b" opacity="0.92"/>
+  <path d="M0 472 512 168v28L0 500z" fill="#2f6fd0" opacity="0.9"/>
+  <g fill="#f4f7fc">
+    <rect x="236" y="150" width="40" height="150" rx="20"/>
+    <rect x="226" y="290" width="60" height="26" rx="13"/>
+    <rect x="246" y="316" width="20" height="90" rx="10"/>
+  </g>
+  <circle cx="256" cy="256" r="170" fill="none" stroke="#5b94e8" stroke-width="10" opacity="0.35"/>
+</svg>
