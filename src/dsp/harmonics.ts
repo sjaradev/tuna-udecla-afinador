@@ -101,6 +101,13 @@ export function resolveAuto(
   let best: ResolvedPitch | null = null;
   let bestScore = -Infinity;
 
+  // Trampa de subarmónico: si la señal también es periódica en τ0/2 con
+  // claridad comparable, el máximo elegido probablemente es la MITAD de la
+  // fundamental real (error de octava hacia abajo) → penalizar k = 1.
+  // Margen seguro: en fundamentales débiles correctos clarityAtHalfTau ≤ ~0.6.
+  const likelySubharmonic =
+    cand.clarityAtHalfTau >= 0.8 * cand.clarity && cand.clarityAtHalfTau > 0.5;
+
   for (const k of factors) {
     const f = cand.freq * k;
     const midiFloat = freqToMidi(f, a4);
@@ -108,6 +115,9 @@ export function resolveAuto(
 
     // Claridad estimada del candidato
     let clarityEst = cand.clarity;
+    if (k === 1 && likelySubharmonic) {
+      clarityEst *= SUBHARMONIC_PENALTY;
+    }
     if (k === 1 / 2) {
       clarityEst =
         cand.clarityAt2Tau > 0

@@ -3,13 +3,21 @@
  * se publica como máximo ~15 veces/segundo y solo cuando cambian los campos
  * discretos. La aguja NO pasa por aquí (usa su propio canal por rAF).
  */
-import type { LevelInfo, MicError, MicState, TunerReading } from '../types';
+import type {
+  LevelInfo,
+  MicError,
+  MicState,
+  TunerConfig,
+  TunerReading,
+} from '../types';
 
 export interface TunerUIState {
   micState: MicState;
   micError: MicError | null;
   reading: TunerReading | null;
   level: LevelInfo | null;
+  /** Última configuración que el worker confirmó tener aplicada. */
+  workerConfig: TunerConfig | null;
 }
 
 const INITIAL: TunerUIState = {
@@ -17,6 +25,7 @@ const INITIAL: TunerUIState = {
   micError: null,
   reading: null,
   level: null,
+  workerConfig: null,
 };
 
 type Listener = () => void;
@@ -37,6 +46,10 @@ class TunerStore {
 
   setMicState(micState: MicState, micError: MicError | null): void {
     this.commit({ ...this.state, micState, micError });
+  }
+
+  setWorkerConfig(workerConfig: TunerConfig): void {
+    this.commit({ ...this.state, workerConfig });
   }
 
   setLevel(level: LevelInfo): void {

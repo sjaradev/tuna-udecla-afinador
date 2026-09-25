@@ -28,7 +28,8 @@ function wireEngine(): void {
   audioEngine.onState((state, error) => tunerStore.setMicState(state, error));
   audioEngine.onReading((msg) => {
     if (msg.type === 'reading') tunerStore.setReading(msg.reading);
-    else tunerStore.setLevel(msg.level);
+    else if (msg.type === 'level') tunerStore.setLevel(msg.level);
+    else tunerStore.setWorkerConfig(msg.config);
   });
 }
 
@@ -70,6 +71,7 @@ export function useTuner() {
       micError: ui.micError,
       reading: ui.reading,
       level: ui.level,
+      workerConfig: ui.workerConfig,
       activate,
       resumeFromGesture,
       stop,

@@ -96,4 +96,6 @@ export type MainToWorker =
 
 export type WorkerToMain =
   | { type: 'reading'; reading: TunerReading }
-  | { type: 'level'; level: LevelInfo };
+  | { type: 'level'; level: LevelInfo }
+  /** Acuse de la configuración que el worker tiene realmente aplicada. */
+  | { type: 'configAck'; config: TunerConfig };

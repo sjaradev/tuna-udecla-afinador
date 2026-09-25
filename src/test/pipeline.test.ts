@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { TunerPipeline } from '../dsp/pipeline';
 import { HOP } from '../config/tuner';
 import type { TunerConfig, TunerReading } from '../types';
-import { mix, pluck, silence, sine, whiteNoise, windows } from './signals';
+import { mix, partials, pluck, silence, sine, whiteNoise, windows } from './signals';
 
 const SR = 48000;
 
@@ -140,5 +140,36 @@ describe('pipeline — cuerda pulsada (T11)', () => {
     expect(published.length).toBeGreaterThan(10);
     const correct = published.filter((r) => r.stringIndex === 0).length;
     expect(correct / published.length).toBeGreaterThanOrEqual(0.95);
+  });
+
+  it('pluck de E4 en guitarra automático → cuerda 6 (E4), cents ≈ 0', () => {
+    const readings = run(pluck(329.63, SR, 1.2, 7), makeConfig());
+    const published = readings.filter((r) => r.freq !== null);
+    expect(published.length).toBeGreaterThan(10);
+    const last = published[published.length - 1];
+    expect(last.stringIndex).toBe(5); // E4
+    expect(Math.abs(last.cents!)).toBeLessThanOrEqual(3);
+  });
+
+  it('pluck medio tono bajo (D♯4) NO cae una octava: reporta E4 muy bajo', () => {
+    // Regresión: una lectura de ~155.6 Hz (D♯3) sería un error de octava.
+    const readings = run(pluck(311.13, SR, 1.2, 8), makeConfig());
+    const published = readings.filter((r) => r.freq !== null);
+    expect(published.length).toBeGreaterThan(10);
+    const last = published[published.length - 1];
+    expect(last.freq!).toBeGreaterThan(280); // nunca ~155 Hz
+    expect(last.stringIndex).toBe(5); // se referencia a E4
+    expect(last.cents!).toBeLessThan(-60); // claramente "bajo · tensa"
+  });
+
+  it('fundamental débil con armónicos fuertes: detecta la fundamental', () => {
+    // Cuerda delgada real: H2/H3 más fuertes que la fundamental.
+    const sig = partials(329.63, [0.15, 1, 0.5, 0.3, 0.2], SR, 1.5);
+    const readings = run(sig, makeConfig());
+    const published = readings.filter((r) => r.freq !== null);
+    expect(published.length).toBeGreaterThan(10);
+    const last = published[published.length - 1];
+    expect(last.stringIndex).toBe(5);
+    expect(Math.abs(last.cents!)).toBeLessThanOrEqual(5);
   });
 });

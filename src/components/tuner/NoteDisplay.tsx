@@ -22,8 +22,10 @@ export function NoteDisplay({ reading, notation }: Props) {
 
   return (
     <div className="relative flex flex-col items-center gap-1" aria-live="off">
+      {/* Altura fija: la octava usa posición relativa (no align-super) para
+          que su aparición no agrande la caja ni mueva la pantalla. */}
       <div
-        className={`font-extrabold tracking-tighter transition-all duration-300 ${stateColor(reading)} ${
+        className={`flex h-24 items-center justify-center font-extrabold tracking-tighter transition-all duration-300 sm:h-32 ${stateColor(reading)} ${
           tuned
             ? '[filter:drop-shadow(0_0_28px_rgb(65_220_139/0.45))]'
             : hasNote
@@ -31,9 +33,11 @@ export function NoteDisplay({ reading, notation }: Props) {
               : ''
         }`}
       >
-        <span className="text-8xl tabular-nums sm:text-9xl">{namePart}</span>
+        <span className="text-8xl leading-none tabular-nums sm:text-9xl">
+          {namePart}
+        </span>
         {octavePart && (
-          <span className="align-super text-3xl font-bold sm:text-4xl">
+          <span className="relative -top-7 text-3xl leading-none font-bold sm:-top-9 sm:text-4xl">
             {octavePart}
           </span>
         )}

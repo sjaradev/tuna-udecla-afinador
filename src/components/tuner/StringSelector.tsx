@@ -34,13 +34,13 @@ export function StringSelector({ preset, selected, detected, notation, onSelect 
       <button
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
-        className="glass flex min-h-11 w-full items-center justify-between gap-2 rounded-2xl px-4 text-sm transition-colors hover:bg-white/[0.06]"
+        className="glass flex min-h-11 w-full items-center justify-between gap-2 rounded-2xl px-4 text-sm whitespace-nowrap transition-colors hover:bg-white/[0.06]"
       >
-        <span className="text-brand-muted">Cuerda</span>
-        <span className="flex items-center gap-2 font-semibold">
+        <span className="shrink-0 text-brand-muted">Cuerda</span>
+        <span className="flex min-w-0 items-center gap-2 font-semibold">
           {selectedName ?? 'Automática'}
           {detectedName && (
-            <span className="text-xs font-medium text-brand-blue-bright">
+            <span className="truncate text-xs font-medium text-brand-blue-bright">
               · detectada {detectedName}
             </span>
           )}

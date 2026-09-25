@@ -98,7 +98,7 @@ export function TunerScreen() {
 
 /** Panel de calibración (?debug=1): crudo vs. mostrado, claridad, RMS, piso. */
 function DebugPanel() {
-  const { reading, level } = useTuner();
+  const { reading, level, workerConfig } = useTuner();
   const [, force] = useState(0);
   useEffect(() => {
     const id = setInterval(() => force((n) => n + 1), 200);
@@ -116,6 +116,9 @@ function DebugPanel() {
           noiseFloorDb: level?.noiseFloorDb.toFixed(1),
           gateOpen: level?.gateOpen,
           reject: reading?.rejectReason,
+          worker: workerConfig
+            ? `${workerConfig.instrument}/${workerConfig.mode}/A4=${workerConfig.a4}/str=${workerConfig.stringIndex ?? 'auto'}`
+            : '—',
         },
         null,
         1,

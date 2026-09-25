@@ -73,8 +73,10 @@ ctx.onmessage = (e: MessageEvent<MainToWorker>) => {
     capturePort.onmessage = (ev: MessageEvent<CaptureChunk>) => {
       if (ev.data?.type === 'chunk') handleChunk(ev.data);
     };
+    ctx.postMessage({ type: 'configAck', config: msg.config });
   } else if (msg.type === 'config') {
     applyConfig(msg.config);
+    ctx.postMessage({ type: 'configAck', config: msg.config });
   }
 };
 

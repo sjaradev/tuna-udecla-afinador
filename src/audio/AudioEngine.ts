@@ -19,7 +19,19 @@ import type {
 type StateListener = (state: MicState, error: MicError | null) => void;
 type ReadingListener = (msg: WorkerToMain) => void;
 
+// El preprocesado del teléfono (supresión de ruido, AGC) destruye la
+// estructura armónica de los instrumentos: se exige desactivado (exacto).
 const MIC_CONSTRAINTS: MediaStreamConstraints = {
+  audio: {
+    echoCancellation: false,
+    noiseSuppression: false,
+    autoGainControl: false,
+    channelCount: { ideal: 1 },
+  },
+};
+
+// Respaldo para dispositivos que rechazan las restricciones exactas.
+const MIC_CONSTRAINTS_FALLBACK: MediaStreamConstraints = {
   audio: {
     echoCancellation: { ideal: false },
     noiseSuppression: { ideal: false },
@@ -27,6 +39,18 @@ const MIC_CONSTRAINTS: MediaStreamConstraints = {
     channelCount: { ideal: 1 },
   },
 };
+
+/** Pide el micrófono sin preprocesado; cae al modo "ideal" si no es posible. */
+async function requestMic(): Promise<MediaStream> {
+  try {
+    return await navigator.mediaDevices.getUserMedia(MIC_CONSTRAINTS);
+  } catch (err) {
+    if (err instanceof DOMException && err.name === 'OverconstrainedError') {
+      return navigator.mediaDevices.getUserMedia(MIC_CONSTRAINTS_FALLBACK);
+    }
+    throw err;
+  }
+}
 
 export class AudioEngine {
   private ctx: AudioContext | null = null;
@@ -105,7 +129,7 @@ export class AudioEngine {
 
     let stream: MediaStream;
     try {
-      stream = await navigator.mediaDevices.getUserMedia(MIC_CONSTRAINTS);
+      stream = await requestMic();
     } catch (err) {
       this.handleGetUserMediaError(err);
       return false;
@@ -246,7 +270,7 @@ export class AudioEngine {
     if (!this.config) return;
     this.setState('requesting');
     try {
-      const stream = await navigator.mediaDevices.getUserMedia(MIC_CONSTRAINTS);
+      const stream = await requestMic();
       // Reusar el grafo: solo reemplazar el source
       if (this.ctx && this.worker) {
         this.stream = stream;
