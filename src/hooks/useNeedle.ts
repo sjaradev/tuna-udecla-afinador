@@ -22,6 +22,7 @@ export function useNeedle(
     let raf = 0;
     let current = 0;
     let last = performance.now();
+    let lastWritten = Number.NaN;
     const loop = (now: number) => {
       const dt = Math.min(50, now - last);
       last = now;
@@ -29,10 +30,17 @@ export function useNeedle(
       // Suavizado visual propio (constante ~90 ms), independiente del DSP
       const alpha = 1 - Math.exp(-dt / 90);
       current += (target - current) * alpha;
-      needleRef.current?.setAttribute(
-        'transform',
-        `rotate(${centsToAngle(current).toFixed(2)} 100 100)`,
-      );
+      // Escribir en el DOM solo si el ángulo cambió: con la aguja quieta,
+      // setAttribute cada frame forzaba repintados constantes del glow SVG
+      // (calentamiento del dispositivo).
+      const angle = centsToAngle(current);
+      if (Math.abs(angle - lastWritten) > 0.005) {
+        lastWritten = angle;
+        needleRef.current?.setAttribute(
+          'transform',
+          `rotate(${angle.toFixed(2)} 100 100)`,
+        );
+      }
       raf = requestAnimationFrame(loop);
     };
     raf = requestAnimationFrame(loop);
