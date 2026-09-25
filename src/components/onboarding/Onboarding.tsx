@@ -16,20 +16,28 @@ export function Onboarding({ loading, onActivate }: Props) {
         className="pointer-events-none absolute inset-x-0 top-0 h-24 opacity-20"
         style={{
           background:
-            'repeating-linear-gradient(135deg, transparent 0 26px, #2f6fd0 26px 34px, transparent 34px 60px, #e8b93b 60px 68px, transparent 68px 94px)',
+            'repeating-linear-gradient(135deg, transparent 0 26px, #3b7de0 26px 34px, transparent 34px 60px, #f0c04a 60px 68px, transparent 68px 94px)',
           maskImage: 'linear-gradient(to bottom, black, transparent)',
           WebkitMaskImage: 'linear-gradient(to bottom, black, transparent)',
         }}
       />
 
-      <img src={escudoUrl} alt="" className="h-20 w-20" />
+      <div className="relative">
+        <div
+          aria-hidden
+          className="absolute inset-0 -m-6 rounded-full bg-brand-gold/15 blur-3xl"
+        />
+        <img src={escudoUrl} alt="" className="relative h-24 w-24" />
+      </div>
 
       <div>
-        <p className="text-sm font-semibold tracking-[0.3em] text-brand-gold">
+        <p className="text-xs font-bold tracking-[0.35em] text-brand-gold">
           TUNA UDEC
         </p>
-        <h1 className="mt-1 text-5xl font-black tracking-tight">Afinador</h1>
-        <p className="mt-3 max-w-xs text-brand-muted">
+        <h1 className="text-gradient mt-2 text-6xl font-black tracking-tighter">
+          Afinador
+        </h1>
+        <p className="mx-auto mt-3 max-w-xs text-brand-muted">
           Afina tu instrumento con precisión, dondequiera que estés.
         </p>
       </div>
@@ -37,12 +45,35 @@ export function Onboarding({ loading, onActivate }: Props) {
       <Button
         onClick={onActivate}
         disabled={loading}
-        className="px-10 py-4 text-lg"
+        className="rounded-full px-12 py-4 text-lg tracking-wide"
       >
         {loading ? 'Solicitando micrófono…' : 'ACTIVAR AFINADOR'}
       </Button>
 
-      <p className="max-w-xs text-xs leading-relaxed text-brand-muted">
+      <p className="glass flex max-w-xs items-center gap-2 rounded-full px-4 py-2 text-xs leading-relaxed text-brand-muted">
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden
+          className="shrink-0 text-brand-green"
+        >
+          <rect
+            x="5"
+            y="11"
+            width="14"
+            height="9"
+            rx="2"
+            stroke="currentColor"
+            strokeWidth="1.8"
+          />
+          <path
+            d="M8 11V8a4 4 0 1 1 8 0v3"
+            stroke="currentColor"
+            strokeWidth="1.8"
+          />
+        </svg>
         El audio se procesa exclusivamente en tu dispositivo. No se graba ni se
         envía a ningún servidor.
       </p>

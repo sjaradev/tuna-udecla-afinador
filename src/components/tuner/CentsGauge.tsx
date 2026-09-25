@@ -31,6 +31,7 @@ function arcPath(fromDeg: number, toDeg: number, r: number): string {
 }
 
 const TICKS = [-50, -25, 0, 25, 50];
+const NEEDLE_TIP = polar(0, R - 14);
 
 export function CentsGauge({ centsRef, needleColor }: Props) {
   const needleRef = useNeedle(centsRef);
@@ -47,33 +48,59 @@ export function CentsGauge({ centsRef, needleColor }: Props) {
         aria-valuenow={Math.round(centsRef.current)}
         aria-label="Desviación en cents"
       >
-        {/* Arco base */}
+        <defs>
+          {/* Degradado semántico: rojo en extremos, dorado cerca, verde al centro */}
+          <linearGradient id="gaugeGradient" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="#f26d6d" />
+            <stop offset="28%" stopColor="#f0c04a" />
+            <stop offset="50%" stopColor="#41dc8b" />
+            <stop offset="72%" stopColor="#f0c04a" />
+            <stop offset="100%" stopColor="#f26d6d" />
+          </linearGradient>
+          <filter id="needleGlow" x="-60%" y="-60%" width="220%" height="220%">
+            <feDropShadow
+              dx="0"
+              dy="0"
+              stdDeviation="3.5"
+              floodColor={needleColor}
+              floodOpacity="0.9"
+            />
+          </filter>
+        </defs>
+
+        {/* Pista base tenue */}
         <path
           d={arcPath(-60, 60, R)}
           fill="none"
-          stroke="#1a3050"
-          strokeWidth="10"
+          stroke="rgb(255 255 255 / 0.08)"
+          strokeWidth="6"
           strokeLinecap="round"
         />
-        {/* Zona "afinado" ±5 cents (±6°) */}
+        {/* Arco con degradado semántico */}
+        <path
+          d={arcPath(-60, 60, R)}
+          fill="none"
+          stroke="url(#gaugeGradient)"
+          strokeWidth="6"
+          strokeLinecap="round"
+          opacity="0.9"
+        />
+        {/* Zona "afinado" ±5 cents (±6°): realce verde brillante */}
         <path
           d={arcPath(-6, 6, R)}
           fill="none"
-          stroke="#3fce7a"
-          strokeWidth="10"
+          stroke="#41dc8b"
+          strokeWidth="8"
           strokeLinecap="round"
-          opacity="0.85"
+          opacity="0.95"
         />
-        {/* Zonas "cerca" ±5–15 cents (±6–18°) */}
-        <path d={arcPath(-18, -6, R)} fill="none" stroke="#e8b93b" strokeWidth="10" opacity="0.5" />
-        <path d={arcPath(6, 18, R)} fill="none" stroke="#e8b93b" strokeWidth="10" opacity="0.5" />
 
         {/* Ticks */}
         {TICKS.map((c) => {
           const angle = (c / 50) * 60;
-          const p1 = polar(angle, R - 12);
-          const p2 = polar(angle, R - 20);
-          const lp = polar(angle, R - 30);
+          const p1 = polar(angle, R - 11);
+          const p2 = polar(angle, R - 17);
+          const lp = polar(angle, R - 28);
           return (
             <g key={c}>
               <line
@@ -81,15 +108,17 @@ export function CentsGauge({ centsRef, needleColor }: Props) {
                 y1={p1.y}
                 x2={p2.x}
                 y2={p2.y}
-                stroke="#8fa3bf"
-                strokeWidth={c === 0 ? 3 : 1.5}
+                stroke={c === 0 ? 'rgb(255 255 255 / 0.75)' : 'rgb(255 255 255 / 0.28)'}
+                strokeWidth={c === 0 ? 2.5 : 1.5}
+                strokeLinecap="round"
               />
               <text
                 x={lp.x}
                 y={lp.y + 3}
                 textAnchor="middle"
                 fontSize="8"
-                fill="#8fa3bf"
+                fontWeight={c === 0 ? 700 : 400}
+                fill="rgb(147 165 194 / 0.85)"
               >
                 {c > 0 ? `+${c}` : c}
               </text>
@@ -97,25 +126,34 @@ export function CentsGauge({ centsRef, needleColor }: Props) {
           );
         })}
 
-        {/* Aguja (rotada por useNeedle vía transform) */}
-        <g ref={needleRef}>
+        {/* Aguja (rotada por useNeedle vía transform) con glow */}
+        <g ref={needleRef} filter="url(#needleGlow)">
           <line
             x1={CX}
             y1={CY}
-            x2={CX}
-            y2={CY - R + 14}
+            x2={NEEDLE_TIP.x}
+            y2={NEEDLE_TIP.y}
             stroke={needleColor}
-            strokeWidth="4"
+            strokeWidth="3.5"
             strokeLinecap="round"
           />
+          <circle cx={NEEDLE_TIP.x} cy={NEEDLE_TIP.y} r="4" fill={needleColor} />
         </g>
-        <circle ref={centerDotRef} cx={CX} cy={CY} r="7" fill={needleColor} />
+        <circle
+          ref={centerDotRef}
+          cx={CX}
+          cy={CY}
+          r="6"
+          fill={needleColor}
+          filter="url(#needleGlow)"
+        />
+        <circle cx={CX} cy={CY} r="2.5" fill="#050b16" />
       </svg>
 
       {/* Instrucciones laterales: izquierda = baja (tensa), derecha = alta (afloja) */}
-      <div className="mt-1 flex justify-between text-xs text-brand-muted">
+      <div className="mt-1 flex justify-between text-[11px] font-medium tracking-wide text-brand-muted">
         <span>Bajo · Tensa ↑</span>
-        <span className="font-semibold text-brand-green">Afinado</span>
+        <span className="font-bold text-brand-green">Afinado</span>
         <span>Alto · Afloja ↓</span>
       </div>
     </div>

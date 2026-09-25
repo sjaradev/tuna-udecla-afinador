@@ -1,3 +1,5 @@
+import type React from 'react';
+
 interface Props {
   label: string;
   value: number;
@@ -25,7 +27,10 @@ export function Slider({ label, value, min, max, step, unit = '', onChange }: Pr
         step={step}
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="h-12 w-full accent-brand-gold"
+        className="slider h-12 w-full"
+        style={{
+          '--fill': `${((value - min) / (max - min)) * 100}%`,
+        } as React.CSSProperties}
       />
     </label>
   );

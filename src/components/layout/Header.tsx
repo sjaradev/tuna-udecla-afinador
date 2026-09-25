@@ -8,22 +8,28 @@ export function Header({ onOpenSettings }: Props) {
   return (
     <header className="flex items-center justify-between gap-3 py-2">
       <div className="flex items-center gap-3">
-        <img
-          src={escudoUrl}
-          alt="Escudo Universidad de Concepción"
-          className="h-10 w-10"
-        />
+        <div className="glass flex h-11 w-11 items-center justify-center rounded-2xl">
+          <img
+            src={escudoUrl}
+            alt="Escudo Universidad de Concepción"
+            className="h-7 w-7"
+          />
+        </div>
         <div className="leading-tight">
-          <p className="text-sm font-bold tracking-wide">Tuna UdeC</p>
-          <p className="text-xs text-brand-muted">Campus Los Ángeles</p>
+          <p className="text-sm font-bold tracking-wide">
+            Tuna <span className="text-brand-gold">UdeC</span>
+          </p>
+          <p className="text-[11px] tracking-wide text-brand-muted">
+            Campus Los Ángeles
+          </p>
         </div>
       </div>
       <button
         onClick={onOpenSettings}
         aria-label="Abrir ajustes"
-        className="flex min-h-12 min-w-12 items-center justify-center rounded-xl text-brand-muted transition-colors hover:bg-brand-navy-raised hover:text-brand-white"
+        className="glass flex min-h-12 min-w-12 items-center justify-center rounded-full text-brand-muted transition-all hover:bg-white/[0.08] hover:text-brand-white active:scale-95"
       >
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
           <path
             d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
             stroke="currentColor"

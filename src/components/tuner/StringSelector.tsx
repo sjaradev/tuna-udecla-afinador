@@ -21,10 +21,10 @@ export function StringSelector({ preset, selected, detected, notation, onSelect 
         <button
           onClick={() => onSelect(null)}
           aria-pressed={selected === null}
-          className={`min-h-12 rounded-xl px-2 py-2 text-sm font-semibold transition-colors ${
+          className={`min-h-12 rounded-2xl px-2 py-2 text-sm font-semibold transition-all active:scale-95 ${
             selected === null
-              ? 'bg-brand-gold text-brand-navy'
-              : 'bg-brand-navy-raised text-brand-muted hover:text-brand-white'
+              ? 'bg-gradient-to-b from-brand-gold-soft to-brand-gold text-brand-navy shadow-[0_4px_20px_rgb(240_192_74/0.35)]'
+              : 'border border-white/[0.07] bg-white/[0.04] text-brand-muted hover:bg-white/[0.08] hover:text-brand-white'
           }`}
         >
           Auto
@@ -38,11 +38,11 @@ export function StringSelector({ preset, selected, detected, notation, onSelect 
               onClick={() => onSelect(i)}
               aria-pressed={isSelected}
               aria-label={`Cuerda ${note.stringNumber}: ${note.latin}`}
-              className={`relative min-h-12 rounded-xl px-2 py-1.5 text-sm font-bold transition-colors ${
+              className={`relative min-h-12 rounded-2xl px-2 py-1.5 text-sm font-bold transition-all active:scale-95 ${
                 isSelected
-                  ? 'bg-brand-gold text-brand-navy'
-                  : 'bg-brand-navy-raised text-brand-white hover:bg-brand-blue'
-              } ${isDetected ? 'ring-2 ring-brand-blue-bright' : ''}`}
+                  ? 'bg-gradient-to-b from-brand-gold-soft to-brand-gold text-brand-navy shadow-[0_4px_20px_rgb(240_192_74/0.35)]'
+                  : 'border border-white/[0.07] bg-white/[0.04] text-brand-white hover:bg-white/[0.08]'
+              } ${isDetected ? 'ring-2 ring-brand-blue-bright/80 shadow-[0_0_18px_rgb(107_163_242/0.30)]' : ''}`}
             >
               {notation === 'latin' ? note.latin : note.intl}
               <span className="block text-[10px] font-normal opacity-75">

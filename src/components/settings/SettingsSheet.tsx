@@ -76,16 +76,28 @@ export function SettingsSheet({ open, onClose }: Props) {
         </div>
 
         {supportsVibration && (
-          <label className="flex min-h-12 items-center justify-between gap-4">
+          <label className="flex min-h-12 cursor-pointer items-center justify-between gap-4">
             <span className="text-sm text-brand-muted">
               Vibrar al afinar
             </span>
-            <input
-              type="checkbox"
-              checked={settings.vibrateOnTune}
-              onChange={(e) => updateSettings({ vibrateOnTune: e.target.checked })}
-              className="h-6 w-6 accent-brand-gold"
-            />
+            <span className="relative inline-flex items-center">
+              <input
+                type="checkbox"
+                checked={settings.vibrateOnTune}
+                onChange={(e) =>
+                  updateSettings({ vibrateOnTune: e.target.checked })
+                }
+                className="peer sr-only"
+              />
+              <span
+                aria-hidden
+                className="h-7 w-12 rounded-full border border-white/10 bg-white/[0.08] transition-colors peer-checked:border-brand-gold/60 peer-checked:bg-brand-gold/90 peer-checked:shadow-[0_0_14px_rgb(240_192_74/0.40)]"
+              />
+              <span
+                aria-hidden
+                className="absolute top-1/2 left-1 h-5 w-5 -translate-y-1/2 rounded-full bg-white shadow transition-transform peer-checked:translate-x-5 peer-checked:bg-[#241a04]"
+              />
+            </span>
           </label>
         )}
 

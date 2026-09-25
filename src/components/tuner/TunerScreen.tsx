@@ -43,18 +43,28 @@ export function TunerScreen() {
 
   const preset = instrumentPresets[settings.lastInstrument];
   const needleColor = stateColorHex(reading);
+  const hasSignal = reading?.cents !== null && reading?.cents !== undefined;
 
   return (
     <div className="flex flex-col gap-5 lg:grid lg:grid-cols-2 lg:items-start lg:gap-10">
       {/* Columna de medición */}
-      <section className="flex flex-col items-center gap-4 rounded-3xl bg-brand-navy-soft p-6">
+      <section className="glass relative flex flex-col items-center gap-4 overflow-hidden rounded-[2rem] p-6">
+        {/* Resplandor reactivo: cambia de color según el estado de afinación */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -top-28 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full blur-[100px] transition-all duration-700"
+          style={{
+            backgroundColor: needleColor,
+            opacity: hasSignal ? (reading?.state === 'tuned' ? 0.32 : 0.2) : 0.08,
+          }}
+        />
         <NoteDisplay reading={reading} notation={settings.notation} />
         <CentsGauge centsRef={centsRef} needleColor={needleColor} />
         <SignalHint reading={reading} />
-        {reading?.cents !== null && reading?.cents !== undefined && (
-          <p className="text-sm text-brand-muted tabular-nums">
-            {reading.cents > 0 ? '+' : ''}
-            {reading.cents.toFixed(1)} cents
+        {hasSignal && (
+          <p className="rounded-full border border-white/[0.07] bg-white/[0.03] px-3 py-1 text-xs font-medium text-brand-muted tabular-nums">
+            {reading.cents! > 0 ? '+' : ''}
+            {reading.cents!.toFixed(1)} cents
           </p>
         )}
       </section>

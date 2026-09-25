@@ -39,7 +39,7 @@ export function PermissionHelp({ error, onRetry }: Props) {
   const kind = error?.kind ?? 'unknown';
 
   return (
-    <div className="mx-auto flex max-w-md flex-col items-center gap-5 rounded-3xl bg-brand-navy-soft p-6 text-center">
+    <div className="glass mx-auto flex max-w-md flex-col items-center gap-5 rounded-[2rem] p-6 text-center">
       {kind === 'blocked' && (
         <>
           <h2 className="text-xl font-bold">Micrófono bloqueado</h2>

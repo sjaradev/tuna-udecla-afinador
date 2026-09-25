@@ -48,19 +48,19 @@ export function signalHint(reading: TunerReading | null): string {
 
 /** Color semántico en hex (para la aguja SVG, que no usa clases). */
 export function stateColorHex(reading: TunerReading | null): string {
-  if (!reading || reading.cents === null) return '#8fa3bf';
+  if (!reading || reading.cents === null) return '#93a5c2';
   const label = tuneLabel(reading.cents, reading.state);
   switch (label) {
     case 'afinado':
-      return '#3fce7a';
+      return '#41dc8b';
     case 'bajo':
     case 'alto':
-      return '#e8b93b';
+      return '#f0c04a';
     case 'muy-bajo':
     case 'muy-alto':
-      return '#e05252';
+      return '#f26d6d';
     default:
-      return '#8fa3bf';
+      return '#93a5c2';
   }
 }
 

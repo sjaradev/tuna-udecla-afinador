@@ -22,7 +22,7 @@ export function SegmentedControl<T extends string | number>({
     <div
       role="radiogroup"
       aria-label={ariaLabel}
-      className="flex gap-2 overflow-x-auto rounded-2xl bg-brand-navy-soft p-1.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      className="glass flex gap-1 overflow-x-auto rounded-2xl p-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
     >
       {options.map((opt) => {
         const selected = opt.value === value;
@@ -32,10 +32,10 @@ export function SegmentedControl<T extends string | number>({
             role="radio"
             aria-checked={selected}
             onClick={() => onChange(opt.value)}
-            className={`min-h-12 shrink-0 rounded-xl px-4 py-2 text-sm font-semibold whitespace-nowrap transition-colors ${
+            className={`min-h-12 shrink-0 rounded-xl px-4 py-2 text-sm font-semibold whitespace-nowrap transition-all active:scale-95 ${
               selected
-                ? 'bg-brand-blue text-brand-white shadow'
-                : 'text-brand-muted hover:text-brand-white'
+                ? 'bg-gradient-to-b from-[#4b8bec] to-[#2b5fb8] text-brand-white shadow-[0_4px_16px_rgb(59_125_224/0.40)]'
+                : 'text-brand-muted hover:bg-white/[0.05] hover:text-brand-white'
             }`}
           >
             {opt.label}
