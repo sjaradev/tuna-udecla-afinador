@@ -260,7 +260,7 @@ Pipeline del estabilizador (pseudocódigo completo en spec §7):
    falsear nunca una desviación real.
 9. **Estado "Afinado"**: exige |c| ≤ 5 sostenido durante 400 ms (550 ms en
    Ambiente ruidoso); se abandona con |c| > 7 durante 150 ms.
-10. **Pérdida de señal**: la última lectura se retiene 700 ms; después, la UI
+10. **Pérdida de señal**: la última lectura se retiene 2000 ms; después, la UI
     vuelve a "Escuchando…".
 
 ### 2.10 Dirección del indicador (corrección al borrador)
@@ -606,7 +606,7 @@ Cada fase es pequeña, ejecutable y verificable de forma independiente.
 - **OBJETIVO:** DISPLAY PITCH suave y preciso a partir de lecturas crudas.
 - **ARCHIVOS:** `src/dsp/stabilizer.ts`, tests.
 - **IMPLEMENTACIÓN:** búfer + mediana + EMA adaptativa + pitch lock + histéresis
-  de nota + zona muerta + máquina "Afinado" + retención de 700 ms.
+  de nota + zona muerta + máquina "Afinado" + retención de 2000 ms.
 - **VALIDACIÓN:** con fluctuación de entrada ±3 cents, la desviación estándar
   mostrada < 1 cent; tiempo hasta "Afinado" ≈ 400 ms; cambio de nota sin
   parpadeo en la frontera.
@@ -817,6 +817,6 @@ Las siguientes constantes aparecen en ambos documentos y deben coincidir
 | "Afinado": umbral / tiempo / salida | ±5 cents / 400 ms / >7 cents por 150 ms | ±5 cents / 550 ms / >7 cents por 150 ms |
 | Histéresis de cambio de nota | ±65 cents | ±65 cents |
 | Zona muerta (solo en "Afinado") | ±2 cents | ±2 cents |
-| Retención tras pérdida de señal | 700 ms | 700 ms |
+| Retención tras pérdida de señal | 2000 ms | 2000 ms |
 | Rango modo cuerda | ±600 cents del objetivo | ±600 cents del objetivo |
 | Sensibilidad (Baja/Alta) | ∓6 / ±6 dB sobre umbral | ∓6 / ±6 dB sobre umbral |

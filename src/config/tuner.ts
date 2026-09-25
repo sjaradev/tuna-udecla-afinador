@@ -89,7 +89,7 @@ export const TUNED_CENTS = 5;
 export const TUNED_MS: Record<NoiseMode, number> = { normal: 400, noisy: 550 };
 export const UNTUNED_CENTS = 7;
 export const UNTUNED_MS = 150;
-export const HOLD_MS = 700;
+export const HOLD_MS = 2000;
 export const LABEL_HYST_CENTS = 2;
 export const LABEL_NEAR_CENTS = 15;
 

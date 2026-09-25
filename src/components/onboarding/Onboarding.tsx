@@ -1,5 +1,5 @@
 import { Button } from '../ui/Button';
-import escudoUrl from '../../assets/brand/escudo-udec.svg';
+import { TunaLogo } from '../brand/TunaLogo';
 
 interface Props {
   loading: boolean;
@@ -22,22 +22,13 @@ export function Onboarding({ loading, onActivate }: Props) {
         }}
       />
 
-      <div className="relative">
-        <div
-          aria-hidden
-          className="absolute inset-0 -m-6 rounded-full bg-brand-gold/15 blur-3xl"
-        />
-        <img src={escudoUrl} alt="" className="relative h-24 w-24" />
-      </div>
+      <TunaLogo />
 
       <div>
-        <p className="text-xs font-bold tracking-[0.35em] text-brand-gold">
-          TUNA UDEC
-        </p>
-        <h1 className="text-gradient mt-2 text-6xl font-black tracking-tighter">
+        <h1 className="text-gradient text-5xl font-black tracking-tighter">
           Afinador
         </h1>
-        <p className="mx-auto mt-3 max-w-xs text-brand-muted">
+        <p className="mx-auto mt-2 max-w-xs text-sm text-brand-muted">
           Afina tu instrumento con precisión, dondequiera que estés.
         </p>
       </div>

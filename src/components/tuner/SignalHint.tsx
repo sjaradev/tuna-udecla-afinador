@@ -12,7 +12,7 @@ export function SignalHint({ reading }: Props) {
   return (
     <p
       aria-live="polite"
-      className={`inline-flex min-h-8 items-center gap-2 rounded-full border border-white/[0.07] bg-white/[0.03] px-4 py-1.5 text-center text-sm font-medium ${stateColor(reading)} ${
+      className={`inline-flex min-h-8 items-center gap-2 rounded-full border border-white/[0.07] bg-white/[0.03] px-4 py-1.5 text-center text-sm font-medium whitespace-nowrap ${stateColor(reading)} ${
         tuned ? 'tuned-pulse' : ''
       }`}
     >

@@ -34,9 +34,9 @@ export function signalHint(reading: TunerReading | null): string {
     case 'listening':
       return 'Escuchando…';
     case 'weak':
-      return 'Señal débil — acerca el instrumento al micrófono';
+      return 'Señal débil — acerca el micrófono';
     case 'unstable':
-      return 'Sonido inestable — toca solo una cuerda';
+      return 'Inestable — toca una sola cuerda';
     case 'tuned':
       return 'Afinado';
     case 'tracking': {

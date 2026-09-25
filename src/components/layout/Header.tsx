@@ -12,12 +12,12 @@ export function Header({ onOpenSettings }: Props) {
           <img
             src={escudoUrl}
             alt="Escudo Universidad de Concepción"
-            className="h-7 w-7"
+            className="h-8 w-auto"
           />
         </div>
         <div className="leading-tight">
-          <p className="text-sm font-bold tracking-wide">
-            Tuna <span className="text-brand-gold">UdeC</span>
+          <p className="text-[13px] font-bold tracking-tight">
+            Tuna <span className="text-brand-gold">Universidad de Concepción</span>
           </p>
           <p className="text-[11px] tracking-wide text-brand-muted">
             Campus Los Ángeles

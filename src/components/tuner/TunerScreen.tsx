@@ -61,12 +61,17 @@ export function TunerScreen() {
         <NoteDisplay reading={reading} notation={settings.notation} />
         <CentsGauge centsRef={centsRef} needleColor={needleColor} />
         <SignalHint reading={reading} />
-        {hasSignal && (
-          <p className="rounded-full border border-white/[0.07] bg-white/[0.03] px-3 py-1 text-xs font-medium text-brand-muted tabular-nums">
-            {reading.cents! > 0 ? '+' : ''}
-            {reading.cents!.toFixed(1)} cents
-          </p>
-        )}
+        {/* Siempre renderizado (invisible sin señal) para evitar saltos de layout */}
+        <p
+          aria-hidden={!hasSignal}
+          className={`rounded-full border border-white/[0.07] bg-white/[0.03] px-3 py-1 text-xs font-medium text-brand-muted tabular-nums ${
+            hasSignal ? '' : 'invisible'
+          }`}
+        >
+          {hasSignal
+            ? `${reading.cents! > 0 ? '+' : ''}${reading.cents!.toFixed(1)} cents`
+            : '+0.0 cents'}
+        </p>
       </section>
 
       {/* Columna de controles */}

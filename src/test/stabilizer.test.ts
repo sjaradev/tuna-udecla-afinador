@@ -113,13 +113,13 @@ describe('estabilizador — pitch lock y cambio de nota', () => {
 });
 
 describe('estabilizador — pérdida de señal', () => {
-  it('retiene la última lectura 700 ms y luego vuelve a "Escuchando"', () => {
+  it('retiene la última lectura 2000 ms y luego vuelve a "Escuchando"', () => {
     const stab = makeStabilizer();
     let t = 0;
     for (let i = 0; i < 40; i++, t += DT) stab.pushValid(69, 69, 'n69', t);
-    const held = stab.pushInvalid((t += 300));
+    const held = stab.pushInvalid((t += 1500));
     expect(held.published).toBe(true);
-    const gone = stab.pushInvalid((t += 500)); // 800 ms sin señal
+    const gone = stab.pushInvalid((t += 600)); // 2100 ms sin señal
     expect(gone.published).toBe(false);
   });
 });

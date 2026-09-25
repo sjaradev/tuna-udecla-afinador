@@ -13,6 +13,7 @@ export function InstrumentPicker({ value, onChange }: Props) {
       ariaLabel="Instrumento"
       value={value}
       onChange={onChange}
+      compact
       options={INSTRUMENT_ORDER.map((id) => ({
         value: id,
         label: instrumentPresets[id].name,

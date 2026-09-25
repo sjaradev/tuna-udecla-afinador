@@ -89,7 +89,7 @@ señal), Alta = −6 dB.
 | Resolución de display | `DISPLAY_STEP_CENTS` | 0.5 | 0.5 |
 | Zona muerta (solo "Afinado") | `DEAD_ZONE_CENTS` | ±2 | ±2 |
 | Afinado: umbral / tiempo / salida | `TUNED_CENTS / TUNED_MS / UNTUNED` | ±5 / 400 / >7 por 150 ms | ±5 / 550 / >7 por 150 ms |
-| Retención tras pérdida de señal | `HOLD_MS` | 700 | 700 |
+| Retención tras pérdida de señal | `HOLD_MS` | 2000 | 2000 |
 | Rango cromático | — | 40–2000 Hz | 40–2000 Hz |
 | Etiquetas de estado | — | Muy bajo < −15 · Bajo −15…−5 · Afinado ±5 · Alto +5…+15 · Muy alto > +15 (histéresis 2 cents) | igual |
 
