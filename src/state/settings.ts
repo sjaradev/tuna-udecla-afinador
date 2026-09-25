@@ -92,11 +92,18 @@ export function validateSettings(raw: unknown): Settings {
   };
 }
 
+function defaultStorage(): Pick<Storage, 'getItem' | 'setItem'> | null {
+  // localStorage no existe fuera del navegador (p. ej. tests en Node)
+  return typeof localStorage !== 'undefined' ? localStorage : null;
+}
+
 export function loadSettings(
-  storage: Pick<Storage, 'getItem'> = localStorage,
+  storage?: Pick<Storage, 'getItem'> | null,
 ): Settings {
   try {
-    const raw = storage.getItem(STORAGE_KEY);
+    const store = storage === undefined ? defaultStorage() : storage;
+    if (!store) return { ...DEFAULT_SETTINGS };
+    const raw = store.getItem(STORAGE_KEY);
     if (!raw) return { ...DEFAULT_SETTINGS };
     return validateSettings(JSON.parse(raw));
   } catch {
@@ -134,7 +141,7 @@ class SettingsStore {
 
   private persist(): void {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(this.settings));
+      defaultStorage()?.setItem(STORAGE_KEY, JSON.stringify(this.settings));
     } catch {
       // almacenamiento lleno o bloqueado: la app sigue funcionando en memoria
     }
