@@ -48,7 +48,7 @@ export function TunerScreen() {
   return (
     <div className="flex flex-col gap-5 lg:grid lg:grid-cols-2 lg:items-start lg:gap-10">
       {/* Columna de medición */}
-      <section className="glass relative flex flex-col items-center gap-4 overflow-hidden rounded-[2rem] p-6">
+      <section className="glass relative flex flex-col items-center gap-4 overflow-hidden rounded-[2rem] px-6 pt-8 pb-6 sm:pt-9">
         {/* Resplandor reactivo: cambia de color según el estado de afinación */}
         <div
           aria-hidden

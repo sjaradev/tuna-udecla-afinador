@@ -22,7 +22,8 @@ export function useNeedle(
     let raf = 0;
     let current = 0;
     let last = performance.now();
-    let lastWritten = Number.NaN;
+    // null fuerza el primer setAttribute; NaN rompe la comparación (|x-NaN| > ε es siempre false).
+    let lastWritten: number | null = null;
     const loop = (now: number) => {
       const dt = Math.min(50, now - last);
       last = now;
@@ -34,7 +35,10 @@ export function useNeedle(
       // setAttribute cada frame forzaba repintados constantes del glow SVG
       // (calentamiento del dispositivo).
       const angle = centsToAngle(current);
-      if (Math.abs(angle - lastWritten) > 0.005) {
+      if (
+        lastWritten === null ||
+        Math.abs(angle - lastWritten) > 0.005
+      ) {
         lastWritten = angle;
         needleRef.current?.setAttribute(
           'transform',

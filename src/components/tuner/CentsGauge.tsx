@@ -38,7 +38,7 @@ export function CentsGauge({ centsRef, needleColor }: Props) {
   const centerDotRef = useRef<SVGCircleElement>(null);
 
   return (
-    <div className="w-full max-w-sm">
+    <div className="w-full max-w-sm shrink-0">
       <svg
         viewBox="0 0 200 118"
         className="w-full"
